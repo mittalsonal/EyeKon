@@ -25,8 +25,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${product.name} | EYEKON`,
-    description: `${product.name} by EYEKON. Explore specifications, applications, and submit your product enquiry through WhatsApp.`,
+    title: `${product.code ? `${product.code} ` : ""}${product.name} | EYEKON`,
+    description: product.shortDescription,
   };
 }
 
@@ -52,9 +52,9 @@ export default async function ProductDetailsPage({
           <ChevronRight className="h-4 w-4" />
           <Link href="/products">Products</Link>
           <ChevronRight className="h-4 w-4" />
-          <Link href={`/products?category=${encodeURIComponent(product.category)}`}>{product.category}</Link>
+          <Link href={`/products#${encodeURIComponent(product.category)}`}>{product.category}</Link>
           <ChevronRight className="h-4 w-4" />
-          <span className="font-semibold text-deep-navy">{product.code}</span>
+          <span className="font-semibold text-deep-navy">{product.code || product.name}</span>
         </nav>
         <ProductDetailsClient product={product} />
         <RelatedProducts products={relatedProducts} />

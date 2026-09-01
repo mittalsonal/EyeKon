@@ -13,8 +13,10 @@ export function buildGeneralWhatsAppLink() {
 }
 
 export function buildProductWhatsAppLink(product: Product, quantity: number) {
+  const productLabel = product.code ? `${product.code} - ${product.name}` : product.name;
+
   return openWhatsApp(
-    `Hello EYEKON,\n\nI am interested in the following product:\n\nProduct: ${product.code} ${product.name}\nQuantity: ${quantity}\n\nPlease share the product price, specifications and availability.\n\nThank you.`,
+    `Hello EYEKON,\n\nI am interested in the following ophthalmic equipment:\n\nProduct: ${productLabel}\nQuantity: ${quantity}\n\nPlease share the price, availability and further details.\n\nThank you.`,
   );
 }
 
@@ -34,7 +36,7 @@ export function buildEnquiryWhatsAppLink(
       ? items
           .map(
             (item, index) =>
-              `${index + 1}. ${item.product.code} ${item.product.name}\nQuantity: ${item.quantity}`,
+              `${index + 1}. ${item.product.code ? `${item.product.code} - ` : ""}${item.product.name}\nQuantity: ${item.quantity}`,
           )
           .join("\n\n")
       : "No specific products selected yet.";

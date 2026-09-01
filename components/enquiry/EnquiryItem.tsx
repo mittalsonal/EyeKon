@@ -18,7 +18,9 @@ export function EnquiryItem({ product, quantity, onUpdateQuantity, onRemove }: E
         <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
       </div>
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sapphire">{product.code}</p>
+        {product.code ? (
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sapphire">{product.code}</p>
+        ) : null}
         <h2 className="mt-2 text-xl font-bold text-deep-navy">{product.name}</h2>
         <p className="mt-2 text-sm text-muted">{product.category}</p>
       </div>

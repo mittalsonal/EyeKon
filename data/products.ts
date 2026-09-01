@@ -3,434 +3,55 @@ export interface ProductSpecification {
   value: string;
 }
 
+export interface ProductSection {
+  title: string;
+  description?: string;
+  specifications?: ProductSpecification[];
+  bullets?: string[];
+}
+
 export interface Product {
   id: number;
   slug: string;
-  code: string;
+  code?: string;
   name: string;
   category: string;
   shortDescription: string;
-  description: string;
+  description?: string;
   images: string[];
-  features: string[];
-  specifications: ProductSpecification[];
-  applications: string[];
-  featured: boolean;
-  availability: string;
+  features?: string[];
+  specifications?: ProductSpecification[];
+  accessories?: string[];
+  applications?: string[];
+  additionalSections?: ProductSection[];
+  featured?: boolean;
 }
 
-export const productCategories = [
-  "Diagnostic Equipment",
-  "Slit Lamps",
-  "Refraction Equipment",
-  "Trial Lens Sets",
-  "Ophthalmic Chairs & Units",
-  "Vision Testing Equipment",
-  "Microscopes",
-  "Accessories",
-] as const;
+export const productCategories = ["Diagnostic Equipment", "Slit Lamps", "Refraction Equipment", "Trial Lens Sets", "Ophthalmic Chairs & Units", "Vision Testing Equipment", "Microscopes", "Accessories"] as const;
+
+const specs = (entries: Array<[string, string]>): ProductSpecification[] => entries.map(([label, value]) => ({ label, value }));
 
 const products: Product[] = [
-  {
-    id: 1,
-    slug: "ie-02-slit-lamp",
-    code: "IE-02",
-    name: "Clinical Slit Lamp",
-    category: "Slit Lamps",
-    shortDescription: "Sharp anterior segment assessment with stable illumination and ergonomic controls.",
-    description:
-      "A premium slit lamp platform for consistent clinical imaging, smooth magnification changes, and dependable patient examination workflows.",
-    images: ["/products/slit-lamp.svg"],
-    features: ["Five-step magnification", "LED slit illumination", "Smooth joystick positioning"],
-    specifications: [
-      { label: "Magnification", value: "6x / 10x / 16x / 25x / 40x" },
-      { label: "Illumination", value: "Adjustable LED slit source" },
-      { label: "Base Travel", value: "Stable X-Y mechanical stage" },
-    ],
-    applications: ["Routine OPD examinations", "Anterior segment evaluation", "Clinical documentation"],
-    featured: true,
-    availability: "Available",
-  },
-  {
-    id: 2,
-    slug: "ie-08-corona-target-lens-meter",
-    code: "IE-08",
-    name: "Corona Target Lens Meter",
-    category: "Refraction Equipment",
-    shortDescription: "Manual lens verification with crisp optics and straightforward adjustment controls.",
-    description:
-      "Designed for optical workshops and eye care practices requiring dependable manual lens measurement and easy operator use.",
-    images: ["/products/lens-meter.svg"],
-    features: ["High-contrast target", "Compact tabletop footprint", "Simple diopter scale reading"],
-    specifications: [
-      { label: "Measurement Range", value: "Manual lens power verification" },
-      { label: "Mounting", value: "Desktop" },
-      { label: "Usage", value: "Clinical and optical practice" },
-    ],
-    applications: ["Lens verification", "Workshop use", "Clinic dispensing support"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 3,
-    slug: "ie-07-trial-lens-set",
-    code: "IE-07",
-    name: "Professional Trial Lens Set",
-    category: "Trial Lens Sets",
-    shortDescription: "Comprehensive lens kit arranged for efficient refraction and repeatable workflow.",
-    description:
-      "A neatly organized trial lens system built for daily refraction, training, and chairside convenience in vision practices.",
-    images: ["/products/trial-lens.svg"],
-    features: ["Durable carrying case", "Clearly indexed lens arrangement", "Clinic-friendly handling"],
-    specifications: [
-      { label: "Lens Material", value: "Optical grade lenses" },
-      { label: "Set Layout", value: "Segmented prescription grouping" },
-      { label: "Case", value: "Protective hard case" },
-    ],
-    applications: ["Subjective refraction", "Training institutes", "Vision screening"],
-    featured: true,
-    availability: "Available",
-  },
-  {
-    id: 4,
-    slug: "ie-24-ophthalmic-chair-unit",
-    code: "IE-24",
-    name: "Ophthalmic Chair Unit",
-    category: "Ophthalmic Chairs & Units",
-    shortDescription: "Integrated patient positioning and instrument support for modern consultation rooms.",
-    description:
-      "A treatment unit created to streamline examination room ergonomics, patient comfort, and clinician access to instruments.",
-    images: ["/products/chair-unit.svg"],
-    features: ["Integrated arm assembly", "Comfort-focused patient chair", "Durable clinical finish"],
-    specifications: [
-      { label: "Configuration", value: "Chair with instrument unit" },
-      { label: "Finish", value: "Medical-grade exterior surfaces" },
-      { label: "Use Case", value: "Consultation and refraction rooms" },
-    ],
-    applications: ["Eye clinics", "Hospital OPD rooms", "Refraction cabins"],
-    featured: true,
-    availability: "Contact for Availability",
-  },
-  {
-    id: 5,
-    slug: "ie-32-cordless-indirect-ophthalmoscope",
-    code: "IE-32",
-    name: "Cordless Indirect Ophthalmoscope",
-    category: "Diagnostic Equipment",
-    shortDescription: "Portable retinal viewing solution designed for mobile examinations and ward use.",
-    description:
-      "A cordless examination instrument engineered for freedom of movement and comfortable prolonged diagnostic sessions.",
-    images: ["/products/ophthalmoscope.svg"],
-    features: ["Cordless operation", "Balanced headgear", "Clear fundus illumination"],
-    specifications: [
-      { label: "Power", value: "Rechargeable cordless system" },
-      { label: "Design", value: "Wearable lightweight frame" },
-      { label: "Use", value: "Retinal examination" },
-    ],
-    applications: ["Retina clinics", "Ward rounds", "Mobile screening"],
-    featured: true,
-    availability: "Available",
-  },
-  {
-    id: 6,
-    slug: "digital-led-distance-vision-chart",
-    code: "IE-41",
-    name: "Digital LED Distance Vision Chart",
-    category: "Vision Testing Equipment",
-    shortDescription: "Bright, easy-to-read digital chart designed for refraction rooms and screening setups.",
-    description:
-      "A clear digital charting system for standard distance vision testing with clean visuals and practical mounting options.",
-    images: ["/products/vision-chart.svg"],
-    features: ["LED display clarity", "Remote chart control", "Compact wall-mount design"],
-    specifications: [
-      { label: "Display", value: "Digital LED chart system" },
-      { label: "Control", value: "Remote operation" },
-      { label: "Placement", value: "Wall mounted" },
-    ],
-    applications: ["Refraction rooms", "Screening camps", "Optical outlets"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 7,
-    slug: "zeiss-model-slit-lamp",
-    code: "IE-12",
-    name: "Zeiss Model Slit Lamp",
-    category: "Slit Lamps",
-    shortDescription: "Classic tower-style examination optics tailored for dependable daily clinical performance.",
-    description:
-      "A slit lamp configuration inspired by widely preferred clinical form factors for familiarity, precision, and smooth handling.",
-    images: ["/products/slit-lamp.svg"],
-    features: ["Tower-style optical body", "Stable illumination arm", "Smooth magnification changes"],
-    specifications: [
-      { label: "Optical Design", value: "Tower-style biomicroscope" },
-      { label: "User Flow", value: "Routine anterior segment exam" },
-      { label: "Build", value: "Clinical-duty frame" },
-    ],
-    applications: ["General ophthalmology", "Resident training", "Hospital OPD"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 8,
-    slug: "manual-lensmeter",
-    code: "IE-14",
-    name: "Manual Lensmeter",
-    category: "Refraction Equipment",
-    shortDescription: "Reliable lens power assessment instrument for dispensing desks and service counters.",
-    description:
-      "A straightforward lensmeter designed for practices that value dependable manual readings and long service life.",
-    images: ["/products/lens-meter.svg"],
-    features: ["Manual focusing", "Compact footprint", "Operator-friendly markings"],
-    specifications: [
-      { label: "Operation", value: "Manual" },
-      { label: "Placement", value: "Countertop" },
-      { label: "Application", value: "Lens verification" },
-    ],
-    applications: ["Optical retail", "Clinic dispensing", "Workshop verification"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 9,
-    slug: "auto-lensmeter",
-    code: "IE-15",
-    name: "Auto Lensmeter",
-    category: "Refraction Equipment",
-    shortDescription: "Faster lens measurements with digital convenience for busy optical and clinical teams.",
-    description:
-      "An automated lens measurement system that supports efficient workflows and clear readings for staff and technicians.",
-    images: ["/products/lens-meter.svg"],
-    features: ["Digital readout", "Automated detection", "Streamlined operator workflow"],
-    specifications: [
-      { label: "Display", value: "Digital measurement output" },
-      { label: "Mode", value: "Automatic lens detection" },
-      { label: "Use Case", value: "High-volume practices" },
-    ],
-    applications: ["Optical stores", "Hospital optical units", "Busy clinics"],
-    featured: true,
-    availability: "Available",
-  },
-  {
-    id: 10,
-    slug: "applanation-tonometer",
-    code: "IE-18",
-    name: "Applanation Tonometer",
-    category: "Diagnostic Equipment",
-    shortDescription: "Stable tonometry attachment for controlled intraocular pressure evaluation.",
-    description:
-      "A clinic-ready applanation tonometer that integrates smoothly into daily glaucoma screening and follow-up practice.",
-    images: ["/products/diagnostic-unit.svg"],
-    features: ["Controlled contact measurement", "Clinical mounting compatibility", "Balanced design"],
-    specifications: [
-      { label: "Measurement", value: "Applanation tonometry" },
-      { label: "Compatibility", value: "Clinical slit lamp setup" },
-      { label: "Workflow", value: "Routine pressure checks" },
-    ],
-    applications: ["Glaucoma screening", "Routine eye examination", "Hospital clinics"],
-    featured: true,
-    availability: "Contact for Availability",
-  },
-  {
-    id: 11,
-    slug: "trial-frame",
-    code: "IE-09",
-    name: "Adjustable Trial Frame",
-    category: "Trial Lens Sets",
-    shortDescription: "Comfortable and adjustable frame for quick lens positioning during subjective refraction.",
-    description:
-      "A practical refraction frame designed for repeat use, comfortable patient wear, and smooth clinician adjustments.",
-    images: ["/products/trial-lens.svg"],
-    features: ["Adjustable bridge", "Multiple lens cell support", "Comfort-fit design"],
-    specifications: [
-      { label: "Adjustment", value: "Bridge and temple adjustment" },
-      { label: "Use", value: "Subjective refraction" },
-      { label: "Design", value: "Reusable clinic frame" },
-    ],
-    applications: ["Refraction practice", "Optometry training", "Screening rooms"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 12,
-    slug: "retinoscope",
-    code: "IE-21",
-    name: "Clinical Retinoscope",
-    category: "Diagnostic Equipment",
-    shortDescription: "Dependable retinoscopy illumination and streak control for objective refraction support.",
-    description:
-      "Built for practitioners who require consistent optical performance during objective refraction and pediatric assessments.",
-    images: ["/products/ophthalmoscope.svg"],
-    features: ["Controlled streak movement", "Balanced hand feel", "Clear illumination"],
-    specifications: [
-      { label: "Type", value: "Clinical retinoscope" },
-      { label: "Use", value: "Objective refraction" },
-      { label: "Handling", value: "Portable handheld format" },
-    ],
-    applications: ["Pediatric exams", "Objective refraction", "Training centers"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 13,
-    slug: "direct-ophthalmoscope",
-    code: "IE-22",
-    name: "Direct Ophthalmoscope",
-    category: "Diagnostic Equipment",
-    shortDescription: "Compact handheld optic for chairside fundus evaluation and general examination use.",
-    description:
-      "A reliable everyday handheld diagnostic device suitable for routine examinations in clinics and consultation rooms.",
-    images: ["/products/ophthalmoscope.svg"],
-    features: ["Portable handheld format", "Bright focused illumination", "Simple aperture control"],
-    specifications: [
-      { label: "Format", value: "Handheld" },
-      { label: "Illumination", value: "Focused diagnostic beam" },
-      { label: "Environment", value: "Chairside use" },
-    ],
-    applications: ["Routine practice", "General examination", "Screening support"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 14,
-    slug: "auto-refractometer",
-    code: "IE-27",
-    name: "Auto Refractometer",
-    category: "Refraction Equipment",
-    shortDescription: "Fast objective refraction support with digital workflow for modern examination rooms.",
-    description:
-      "A compact autorefractor solution created to simplify initial measurements and support efficient patient throughput.",
-    images: ["/products/diagnostic-unit.svg"],
-    features: ["Digital interface", "Objective refraction capture", "Modern compact housing"],
-    specifications: [
-      { label: "Function", value: "Objective refraction" },
-      { label: "Display", value: "Digital interface" },
-      { label: "Placement", value: "Refraction workstation" },
-    ],
-    applications: ["Pre-test rooms", "High-volume clinics", "Hospital eye departments"],
-    featured: true,
-    availability: "Contact for Availability",
-  },
-  {
-    id: 15,
-    slug: "keratometer",
-    code: "IE-28",
-    name: "Clinical Keratometer",
-    category: "Diagnostic Equipment",
-    shortDescription: "Corneal curvature assessment instrument designed for careful measurement and stable operation.",
-    description:
-      "Supports pre-fitting assessments and routine corneal evaluation with dependable optics and structured workflow.",
-    images: ["/products/diagnostic-unit.svg"],
-    features: ["Corneal curvature assessment", "Stable base positioning", "Optical clarity"],
-    specifications: [
-      { label: "Measurement", value: "Corneal curvature" },
-      { label: "Use", value: "Contact lens and clinical evaluation" },
-      { label: "Design", value: "Clinical tabletop" },
-    ],
-    applications: ["Corneal assessment", "Contact lens fitting", "Pre-op evaluation"],
-    featured: false,
-    availability: "Contact for Availability",
-  },
-  {
-    id: 16,
-    slug: "operating-microscope",
-    code: "IE-36",
-    name: "Operating Microscope",
-    category: "Microscopes",
-    shortDescription: "Advanced optical visualization platform for precision-focused ophthalmic procedures.",
-    description:
-      "A premium microscope solution built to support magnified visualization, controlled movement, and procedural confidence.",
-    images: ["/products/microscope.svg"],
-    features: ["Enhanced optical clarity", "Procedure-oriented design", "Stable articulated positioning"],
-    specifications: [
-      { label: "Category", value: "Operating microscope" },
-      { label: "Use Case", value: "Ophthalmic procedure support" },
-      { label: "Mounting", value: "Clinical installation setup" },
-    ],
-    applications: ["Surgical support", "Procedure rooms", "Advanced eye care setups"],
-    featured: true,
-    availability: "Contact for Availability",
-  },
-  {
-    id: 17,
-    slug: "vision-drum",
-    code: "IE-42",
-    name: "Vision Drum",
-    category: "Vision Testing Equipment",
-    shortDescription: "Traditional acuity testing device with practical use in clinics and outreach screening.",
-    description:
-      "A reliable visual testing aid for settings that need straightforward, durable, and easy-to-read chart presentation.",
-    images: ["/products/vision-chart.svg"],
-    features: ["Rotary chart format", "Visible high-contrast characters", "Simple use"],
-    specifications: [
-      { label: "Format", value: "Rotating drum chart" },
-      { label: "Application", value: "Vision screening" },
-      { label: "Placement", value: "Room-based testing" },
-    ],
-    applications: ["Vision testing", "Outreach camps", "General OPD"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 18,
-    slug: "pd-meter",
-    code: "IE-45",
-    name: "PD Meter",
-    category: "Accessories",
-    shortDescription: "Quick pupillary distance measurement tool for optical dispensing and refraction support.",
-    description:
-      "A compact accessory for fast, repeatable PD readings in clinic and optical practice environments.",
-    images: ["/products/accessory.svg"],
-    features: ["Compact design", "Fast measurements", "Optical dispensing support"],
-    specifications: [
-      { label: "Function", value: "Pupillary distance measurement" },
-      { label: "Format", value: "Compact tabletop device" },
-      { label: "Use", value: "Dispensing workflow" },
-    ],
-    applications: ["Optical dispensing", "Refraction rooms", "Workshop use"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 19,
-    slug: "ophthalmic-stool",
-    code: "IE-48",
-    name: "Ophthalmic Stool",
-    category: "Accessories",
-    shortDescription: "Smooth mobility and practical comfort for examination and consultation workflows.",
-    description:
-      "A clinic support stool designed to complement ophthalmic units, refraction stations, and consultation rooms.",
-    images: ["/products/accessory.svg"],
-    features: ["Stable rolling base", "Comfort-focused seat", "Simple clinical styling"],
-    specifications: [
-      { label: "Type", value: "Clinical support stool" },
-      { label: "Usage", value: "Exam room support" },
-      { label: "Mobility", value: "Smooth caster base" },
-    ],
-    applications: ["Consultation rooms", "Refraction cabins", "Operator seating"],
-    featured: false,
-    availability: "Available",
-  },
-  {
-    id: 20,
-    slug: "instrument-table",
-    code: "IE-50",
-    name: "Instrument Table",
-    category: "Accessories",
-    shortDescription: "Stable equipment support table built for everyday clinical instrument handling.",
-    description:
-      "A practical support table for organizing ophthalmic devices and improving room efficiency in examination spaces.",
-    images: ["/products/accessory.svg"],
-    features: ["Stable platform", "Compact footprint", "Suitable for multiple device setups"],
-    specifications: [
-      { label: "Use", value: "Instrument support" },
-      { label: "Footprint", value: "Compact clinical layout" },
-      { label: "Environment", value: "Examination and refraction rooms" },
-    ],
-    applications: ["Instrument support", "Clinical rooms", "Optical workflow setup"],
-    featured: false,
-    availability: "Available",
-  },
+  { id: 1, slug: "ie-02-slit-lamp-ultima", code: "IE-02", name: "Slit Lamp - IE-02 ULTIMA", category: "Slit Lamps", shortDescription: "Professional binocular slit lamp microscope designed for ophthalmic examination with multiple magnification levels, adjustable slit illumination and integrated optical filters.", images: ["/products/product_1/Image_3.jpeg", "/products/product_1/Image_2.jpeg", "/products/product_1/Image_1.jpeg"], additionalSections: [{ title: "Specifications - Binocular Microscope", specifications: specs([["Eye Pieces", "10x, 15x"], ["Objective", "1x, 1.6x"], ["Total Magnification", "10x, 16x and 24x"]]) }, { title: "Illumination Unit", specifications: specs([["Slit Image Rotation", "0 to 180°"], ["Tilting Illumination", "Up to 20°"], ["Filter Disc", "Cobalt Filter, Green Filter, Yellow Filter, Natural Density and Open Aperture"], ["Slit Diaphragm Disc", "Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Halogen Lamp", "12 Volt 50 Watts"]]) }], accessories: ["Replacing Lamp", "Plastic Breath Shield", "Testing Rod", "Dust Cover and Fuse", "15 Eye Pieces", "Spare Lamp"], featured: true },
+  { id: 2, slug: "ie-08-corona-target-lens-m6eter", code: "IE-08", name: "Corona Target Lens Meter", category: "Refraction Equipment", shortDescription: "Ocular-type external reading lens meter with pinhole corona target, wide vertex power range and adjustable cylindrical axis measurement.", description: "Lens Meter Corona Target - IE-08.", images: ["/products/product_2/mainImage_1.png", "/products/product_2/Image_2.png", "/products/product_2/Image_3.png"], specifications: specs([["Type", "Ocular Type External Reading System"], ["Vertex Power Range", "±25 D; 0.25 D steps up to ±10 D and 0.50 D steps beyond ±10 D"], ["Cylindrical Axis Scale", "0 to 180° (1° step)"], ["Prismatic Power Range", "5 in the view field (1 step)"], ["Target", "Pinhole Corona"], ["Eyepiece Focusing", "3 D to -5 D"], ["Diameter Of Lens Accommodated", "30 to 80 mm"], ["Tilting Angle", "30° to 90°"], ["Light Source", "AC 220 V 3 W LED"]]), featured: true },
+  { id: 3, slug: "ie-07-trial-lens-set-illuminated", code: "IE-07", name: "Trial Lens Set (Illuminated) - IE-07", category: "Trial Lens Sets", shortDescription: "Illuminated IE-07 trial lens set with spherical, cylindrical, prism and accessory lenses for ophthalmic refraction.", images: ["/products/product_3/mainImage_1.png"], additionalSections: [{ title: "Specifications", bullets: ["32 pairs each convex and concave spherical lenses", "20 pairs each convex and concave cylindrical lenses", "Spherical range: 0.25 to 4.00 in 0.25 steps", "Spherical range: 4.50 to 6.00 in 0.50 steps", "Spherical range: 7.00 to 14.00 in 1.00 steps", "Spherical range: 16.00 to 20.00 in 2.00 steps", "Cylindrical range: 0.25 to 3.50 in 0.25 steps", "Cylindrical range: 4.00 to 6.00 in 0.50 steps", "Prisms: 1/2.1, 2, 3, 4, 5, 6, 8, 10, 12"] }], accessories: ["Maddox", "Red Glass", "Green Glass", "Stenopaic Slit", "Pinhole", "2 Blank Discs"], featured: true },
+  { id: 4, slug: "ie-24-chair-unit", code: "IE-24", name: "Chair Unit - IE-24", category: "Ophthalmic Chairs & Units", images: ["/products/product_4/mainImage_1.png"], shortDescription: "Multi-functional ophthalmic chair and stand unit designed to combine examination and refraction equipment within one workstation.", features: ["A multi-functional unit for comfortable usage by ophthalmologists, providing optimum utilization and patient comfort.", "Occupies minimum space and provides refraction / examination in one unit.", "With hands-on control panel for overhaul lamp, slit lamp, auto refractometer, ophthalmoscope / retinoscope, chair elevation and auxiliary outlet, this versatile unit has effortless lateral movement.", "The chair can be rotated 180° around vertical axis with an electrical input.", "Can be locked at any position.", "The elegant, smooth and noiseless chair can receive up to 180° through motioned movement, converting it into a minor surgery table."], additionalSections: [{ title: "Chair Specifications", specifications: specs([["Up/Back (Forward)", "By DC Motor 24 V"], ["HeadSet", "Detachable"], ["Elevation Stroke", "190 mm"], ["Seat Height", "560 mm x 760 mm"], ["Inclination Of BackSeat", "100 to 175°"], ["Rotation", "0 to 180°"], ["Foot Switch", "For Up/Down Of Chair Only"], ["Arm Rest", "Moulded Polyurethane"], ["Input Tension", "240 V DC"], ["Net Weight", "98 Kg"], ["Load Lifting Capacity", "180 Kg"], ["Required Space", "2450 mm x 1300 mm in Fully Reclined Position; 1700 mm x 1300 mm in Erect Position"]]) }, { title: "Stand Unit", specifications: specs([["Slide Table Stroke", "345 mm"], ["Power Supply", "0, 2.5, 3, 6, & 12V Selections For Table Mounted Equipments"], ["Height Adjustment", "560 mm x 760 mm"], ["Safety Stopper", "Available"], ["Height From Floor", "870 mm"], ["Tray Movement", "0 to 90° (Rotated)"], ["Table Top Size", "400 mm x 810 mm"], ["Trial Lens Set Tray Size", "520 mm x 340 mm x 50 mm"], ["Base Plate", "770 mm x 730 mm"], ["Main Unit Body", "700 mm x 480 mm x 220 mm"], ["Light Pole Length", "1800 mm x 22.5 mm Diameter"], ["Prescription", "400 mm x 400 mm"], ["Fuse", "Slow Blow Type"], ["Power Source", "220 V AC"], ["Net Weight", "152 Kg"]]) }], featured: true },
+  { id: 5, slug: "ie-19-synoptophore", code: "IE-19", name: "Synoptophore - IE-19", category: "Diagnostic Equipment", images: ["/products/product_5/mainImage_1.png"], shortDescription: "IE-19 Synoptophore with adjustable optical tube movement, LED slide illumination and selectable flashing modes.", features: ["Slide Illumination: Rheostat Controlled LED Lamp for Each Slide. After Image Illumination by LED Lamp (For Better Illumination).", "Auto Flashing: Auto Flashing Of Slide Illumination Either Simultaneous or Alternate in Paid & Variable modes.", "Mode & Mode Selection: Normal, Flashing Right, Flashing Left, Flashing R+L & Auto Flashing can be Selected By a Single Selector Knob."], additionalSections: [{ title: "Movement Of Optical Tubes", specifications: specs([["Horizontal Adduction", "+50°"], ["Horizontal Abduction", "-40°"], ["Vertical Hyper", "30°"], ["Vertical Hypo", "30°"], ["Torsional Incyclo", "20°"], ["Torsional Excyclo", "20°"]]) }], accessories: ["Dust Cover", "A set of slides containing 9 pairs", "Power Cord"], featured: false },
+  { id: 6, slug: "ie-03-p-power-instrument-table", code: "IE-03 P", name: "Motorized Instruments Table - IE-03 P", category: "Accessories", shortDescription: "Motorized ophthalmic power instrument table with electrically controlled vertical movement and up to 50 kg load capacity.", images: ["/products/product_6/mainImage_1.png"], specifications: specs([["Height Minimum", "675 mm"], ["Height Maximum", "875 mm"], ["Vertical Traveling Range", "200 mm"], ["Load Maximum", "50 Kg"], ["Table Top Size", "570 x 400 x 24 mm"], ["Power Supply AC", "220 V, 50/60 Hz"], ["Weight (Actual)", "15 Kg"], ["Up & Down Movement", "By Feather Touch Switch Mounted With Wooden Top"]]), featured: false },
+  { id: 7, slug: "ie-02-three-step-zeiss-slit-lamp", code: "IE-02", name: "IE-02 Three Step Zeiss Slit Lamp", category: "Slit Lamps", shortDescription: "Galilean slit lamp with three-step drum magnification, wide-field eyepiece and adjustable slit illumination.", images: ["/products/product_7/mainImage_1.png"], additionalSections: [{ title: "Specifications", specifications: specs([["Microscope", "Galilean"], ["Magnification", "3 Step Drum Rotation; 10X, 16X, 25X"], ["Eyepiece", "Wide Field 12.5X"], ["IPD Range", "48.5 - 80 mm, Dioptric Adjustment +/-6"], ["Slit Length/Width", "0-14 mm"], ["Slit Apertures", "0.2, 5, 8, 10, 12 mm and Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Slit Rotation", "0-180°"], ["Filters", "Red Free, Cobalt Blue, Heat Absorbing"]]) }, { title: "Movement Ranges", specifications: specs([["Illumination", "6 Volt 20 Watts"], ["Voltage", "Universal AC Input 110V - 240V (50/60 Hz), CE"], ["Weight", "25 Kg"]]) }], accessories: ["Plastic Breath Shield", "Dust Cover and Fuse", "Spare Lamp", "Testing Rod"], featured: false },
+  { id: 8, slug: "ie-06-three-step-surgical-operating-microscope", code: "IE-06", name: "Surgical Operating Microscope Cold Light - IE-06", category: "Microscopes", shortDescription: "Three-step surgical operating microscope with inclined binocular tube, optical light-guide illumination and floor stand.", images: ["/products/product_8/mainImage_1.png"], additionalSections: [{ title: "Specifications - Microscope Section", specifications: specs([["Binocular Tube", "45° Inclined"], ["Eyepieces", "12.5x / 10x / 16mm Dioptric Adjustment"], ["Magnification Changes", "Built In Manual 3-Step Changer"], ["Total Magnification", "7.5x, 12.5x, 20x"], ["Field of View", "37.8 mm, 23.5 mm, 14.5 mm, 9.5 mm"], ["Working Distance", "200 mm"], ["Interpupillary Distance Adjustment", "55 mm to 75 mm"]]) }, { title: "Illumination Unit", specifications: specs([["Type", "By Optical Light Guide System"], ["Light Source", "24V / 250 Watts Halogen Lamp"], ["Illumination Control", "Continuous Adjustment"], ["Field of Illumination", "70 mm"], ["Filter", "Cobalt Blue, Red Free, Heat Absorbing Filter"]]) }, { title: "Stand Section", specifications: specs([["Type", "Floor Stand"], ["Vertical Range Of Counterbalanced Arm", "400 mm"]]) }], featured: true },
+  { id: 9, slug: "ie-02-maxima-slit-lamp", code: "IE-02", name: "Slit Lamp - IE-02 MAXIMA", category: "Slit Lamps", shortDescription: "IE-02 MAXIMA binocular slit lamp with 12.5x and 20x total magnification and adjustable illumination system.", images: ["/products/product_9/mainImage_1.png"], additionalSections: [{ title: "Specifications - Binocular Microscope", specifications: specs([["Eye Pieces", "12.5x"], ["Objective", "1x, 1.6x"], ["Total Magnification", "12.5x and 20x"]]) }, { title: "Illumination Unit", specifications: specs([["Slit Image Rotation", "0 to 180°"], ["Tilting Illumination", "Up to 20°"], ["Filter Disc", "Cobalt Filter, Green Filter, Yellow Filter, Natural Density and Open Aperture"], ["Slit Diaphragm Disc", "Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Halogen Lamp", "12 Volt 50 Watts"]]) }], accessories: ["Replacing Lamp", "Plastic Breath Shield", "Testing Rod", "Dust Cover and Fuse", "Spare Lamp"], featured: false },
+  { id: 10, slug: "ie-06-e-surgical-operating-microscope-ent", code: "IE-06 E", name: "Surgical Operating Microscope ENT - IE-06 E", category: "Microscopes", shortDescription: "ENT and general-surgery microscope with 90° binocular tube, three-step magnification and optical light-guide illumination.", images: ["/products/product_10/mainImage_1.png"], additionalSections: [{ title: "Specifications - Microscope Section", specifications: specs([["Binocular Tube", "90° ENT & General Surgery"], ["Eyepieces", "12.5x / 10x / 16mm Dioptric Adjustment"], ["Magnification Changes", "Built In Manual 3-Step Changer"], ["Total Magnification", "7.5x, 12.5x, 20x 1:3"], ["Field of View", "37.8 mm, 23.5 mm, 14.5 mm"], ["Objective Lens", "F = 200, 250, 300, 400 mm (For General Micro-Surgical Fields)"], ["Working Distance", "200 mm"], ["Interpupillary Distance Adjustment", "55 mm to 75 mm"]]) }, { title: "Illumination Unit", specifications: specs([["Type", "By Optical Light Guide System"], ["Light Source", "24V / 250 Watts Halogen Lamp"], ["Illumination Control", "Continuous Adjustment"], ["Field of Illumination", "70 mm"], ["Filter", "Cobalt Blue, Red Free, Heat Absorbing Filter"]]) }, { title: "Stand Section", specifications: specs([["Type", "Floor Stand"], ["Vertical Range Of Counterbalanced Arm", "400 mm"]]) }], featured: false },
+  { id: 11, slug: "ie-06-i-surgical-operation-microscope", code: "IE-06(I)", name: "Surgical Operation Microscope - IE-06(I)", category: "Microscopes", shortDescription: "Five-step surgical operating microscope with optical light-guide illumination and heavy mobile floor stand.", images: ["/products/product_11/mainImage_1.png"], additionalSections: [{ title: "Specifications - Microscope Section", specifications: specs([["Binocular Tube", "45° Inclined"], ["Eyepiece", "12.5x / 10x / 16mm Dioptric Adjustment"], ["Magnification Changes", "Built In Manual 5-Step Changer"], ["Total Magnification", "5x, 7.5x, 12.5x, 20x, 30x"], ["Field Of View", "59 mm, 37.8 mm, 23.5 mm, 14.5 mm, 9.5 mm"], ["Objective Lens", "F = 200 mm (For General Micro-Surgical Fields)"], ["Working Distance", "200 mm"], ["Interpupillary Distance Adjustment", "55 mm to 75 mm"]]) }, { title: "Illumination Section", specifications: specs([["Type", "By Optical Light Guide System"], ["Light Source", "24V / 250 Watts Halogen Lamp"], ["Illumination Control", "Continuous Adjustment"], ["Field Of Illumination", "70 mm"], ["Filter", "Cobalt Blue, Red Free, Heat Absorbing Filter"], ["Working Distance", "200 mm"], ["Interpupillary Distance Adjustment", "55 mm to 75 mm"]]) }, { title: "Stand Section", specifications: specs([["Type", "Heavy Casted Mobile Floor Stand With Lockable Castor Wheel"], ["Vertical Range Of Counterbalanced Arm", "400 mm"]]) }], featured: false },
+  { id: 12, slug: "ie-14-streak-retinoscope", code: "IE-14", name: "Streak Retinoscope - IE-14", category: "Diagnostic Equipment", shortDescription: "Rechargeable streak retinoscope with independent beam adjustment, 360° streak rotation and adjustable beam convergence.", images: ["/products/product_12/main_image_1.png"], features: ["Operate Either With Rechargeable Cell, can charge with adopter.", "Separate Control For Beam Adjustment & Streak Rotation 360°.", "Beam Adjustment to Divergent, Parallel & Convergent.", "Large Semi-Reflector Interference Mirror Comes With One Spare Bulb 3 V."], featured: true },
+  { id: 13, slug: "motorised-operation-table", name: "Motorised Operation Table", category: "Ophthalmic Chairs & Units", shortDescription: "Fully electric ophthalmic operation table with adjustable height, Trendelenburg positioning and 150 kg maximum patient load.", images: ["/products/product_13/mainImage_1.png"], specifications: specs([["Type of Surgery", "Ophthalmic"], ["Table Type", "Fully Electric"], ["Height Adjustable Range", "200 mm"], ["Trendelenburg", "28 degree"], ["Max Patient Load", "150 kg"], ["Surgery", "Major Surgery"]]), featured: false },
+  { id: 14, slug: "ie-02-z-stepper-slit-lamp", code: "IE-02", name: "Slit Lamp - IE-02 Z Stepper", category: "Slit Lamps", shortDescription: "Zeiss-model three-step slit lamp with Galilean microscope, wide-field eyepiece and adjustable slit apertures.", images: ["/products/product_14/mainImage_1.png"], additionalSections: [{ title: "Specifications", specifications: specs([["Microscope", "Galilean"], ["Magnification", "3 Step Drum Rotation; 10X, 16X, 25X"], ["Eyepiece", "Wide Field 12.5X"], ["IPD Range", "48.5 - 80 mm, Dioptric Adjustment +/-6"], ["Slit Length/Width", "0-14 mm"], ["Slit Apertures", "0.2, 5, 8, 10, 12 mm and Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Slit Rotation", "0-180°"], ["Filters", "Red Free, Cobalt Blue, Heat Absorbing"]]) }, { title: "Movement Ranges", specifications: specs([["Illumination", "6 Volt 20 Watts"], ["Voltage", "Universal AC Input 110V - 240V (50/60 Hz), CE"], ["Weight", "25 Kg"]]) }], accessories: ["Plastic Breath Shield", "Dust Cover and Fuse", "Testing Rod"], featured: false },
+  { id: 15, slug: "ie-02-stepper-magnification-slit-lamp", code: "IE-02", name: "Slit Lamp - IE-02 Stepper Magnification", category: "Slit Lamps", shortDescription: "Three-step Galilean binocular slit lamp with wide-field eyepieces, multiple objectives and variable slit illumination.", images: ["/products/product_15/mainImage_1.png"], additionalSections: [{ title: "Specifications - Binocular Microscope", specifications: specs([["Viewing Oculars", "Binocular, Galilean Type"], ["Magnification Change", "Three Steps Drum Rotation Type"], ["Eye Pieces", "Wide Field 12.5X"], ["Objective", "0.6x, 1x, 1.6x"], ["Total Magnification", "7.5x, 12.5x, 20x"]]) }, { title: "Illumination Unit", specifications: specs([["Slit Image Rotation", "0 to 180°"], ["Tilting Illumination", "5° to 20°"], ["Filter Disc", "Cobalt Filter, Red Free, Yellow Filter, Natural Density and Open Aperture Diaphragm For Infinitely Variable Slit Lengths."], ["Slit Diaphragm Disc", "Six Apertures Of 12, 9, 7, 3 and 0.2 mm and a Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Halogen Lamp", "12 Volt 50 Watts"]]) }], accessories: ["Replacing Mirror", "Plastic Breath Shield", "Testing Rod", "Spare Lamp"], featured: false },
+  { id: 16, slug: "ie-32-cordless-indirect-ophthalmoscope", code: "IE-32", name: "Cordless Indirect Ophthalmoscope - IE-32", category: "Diagnostic Equipment", shortDescription: "Cordless indirect ophthalmoscope with variable LED illumination, stereo optical system and adjustable interpupillary distance.", images: ["/products/product_16/mainImage_1.png"], features: ["Have All Pupil Feature", "Brilliant Variable LED Illumination", "Stereo Optical System", "Cobalt Blue and Green Filters", "Compact and Lightweight Instruments", "Simple Control for Adjusting the Headband", "Interpupillary Distance Adjustable From 50-75 mm"], accessories: ["Carrying Case", "One Scleral Depressor", "Fundus Chart"], featured: true },
+  { id: 17, slug: "ie-08-cc-corona-cross-target-lens-meter", code: "IE-08 CC", name: "Corona Cross Target Lens Meter - IE-08 CC", category: "Refraction Equipment", shortDescription: "IE-08 CC lens meter using a pinhole cross corona target with external ocular reading system.", description: "Same as IE-08 but with Pinhole Cross Corona Target.", images: ["/products/product_17/mainImage_1.png"], specifications: specs([["Type", "Ocular Type External Reading System"], ["Vertex Power Range", "±25 D; 0.25 D steps up to ±10 D and 0.50 D steps beyond ±10 D"], ["Cylindrical Axis Scale", "0 to 180° (1° step)"], ["Prismatic Power Range", "5 in the View Field (1 step)"], ["Target", "Pinhole Corona"], ["Eyepiece Focusing", "3 D to -5 D"], ["Diameter Of Lens Accommodated", "30 to 80 mm"], ["Tilting Angle", "30° to 90°"], ["Light Source", "AC 220 V 3 W LED"]]), featured: false },
+  { id: 18, slug: "ie-02-zeiss-two-step-slit-lamp", code: "IE-02", name: "Slit Lamp - IE-02 Zeiss Model Two Step Magnification", category: "Slit Lamps", shortDescription: "Zeiss-model slit lamp with binocular microscope, multiple eyepieces and adjustable slit illumination.", images: ["/products/product_18/mainImage_1.png"], additionalSections: [{ title: "Specifications - Binocular Microscope", specifications: specs([["Eye Pieces", "10x, 15x"], ["Objective", "1x, 1.6x"], ["Total Magnification", "10x, 16x and 24x"]]) }, { title: "Illumination Unit", specifications: specs([["Slit Image Rotation", "0 to 180°"], ["Filter Disc", "Cobalt Filter, Green Filter, Yellow Filter, Natural Density and Open Aperture"], ["Slit Diaphragm Disc", "Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Halogen Lamp", "6 Volt 20 Watts"]]) }], accessories: ["Replacing Lamp", "Plastic Breath Shield", "Testing Rod", "Dust Cover and Fuse", "15 Eye Pieces"], featured: false },
+  { id: 19, slug: "digital-led-distance-vision-chart", name: "Digital LED Distance Vision Chart", category: "Vision Testing Equipment", shortDescription: "LED back-lit digital distance vision chart with IR remote operation and selectable testing distances.", images: ["/products/product_19/mainImage_1.png"], specifications: specs([["Digital (LED Back Lit)", "Yes"], ["Material", "PVC/Plastic"], ["Size", "19 inch"], ["Item Weight", "2 kg"], ["Operation Mode", "IR Remote, Distance 6FT, 8FT, 9FT, 10FT to 20FT"], ["Voltage", "5 V"], ["Language", "English"]]), featured: true },
+  { id: 20, slug: "ie-02-super-slit-lamp", code: "IE-02", name: "Slit Lamp - IE-02 SUPER", category: "Slit Lamps", shortDescription: "IE-02 SUPER slit lamp with 12.5x eyepiece, dual objectives and adjustable halogen illumination.", images: ["/products/product_20/mainImage_1.png"], additionalSections: [{ title: "Specifications - Binocular Microscope", specifications: specs([["Eye Pieces", "12.5x"], ["Objective", "1x, 1.6x"], ["Total Magnification", "12.5x and 20x"]]) }, { title: "Illumination Unit", specifications: specs([["Slit Image Rotation", "0 to 180°"], ["Tilting Illumination", "Up to 20°"], ["Filter Disc", "Cobalt Filter, Green Filter, Yellow Filter, Natural Density and Open Aperture"], ["Slit Diaphragm Disc", "Wedge Shaped Diaphragm Of Infinitely Variable Slit Lengths"], ["Halogen Lamp", "12 Volt 50 Watts"]]) }], accessories: ["Replacing Lamp", "Plastic Breath Shield", "Testing Rod", "Dust Cover and Fuse", "Spare Lamp"], featured: false },
 ];
 
 export const allProducts = products;
@@ -441,7 +62,5 @@ export function getProductBySlug(slug: string) {
 }
 
 export function getRelatedProducts(category: string, currentSlug: string) {
-  return products
-    .filter((product) => product.category === category && product.slug !== currentSlug)
-    .slice(0, 4);
+  return products.filter((product) => product.category === category && product.slug !== currentSlug).slice(0, 4);
 }

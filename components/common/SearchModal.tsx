@@ -26,9 +26,9 @@ export function SearchProvider({ children }: { children: ReactNode }) {
 
     return allProducts
       .filter((product) =>
-        [product.name, product.code, product.category].some((value) =>
-          value.toLowerCase().includes(normalized),
-        ),
+        [product.name, product.category, product.shortDescription, product.code]
+          .filter((value): value is string => Boolean(value))
+          .some((value) => value.toLowerCase().includes(normalized)),
       )
       .slice(0, 8);
   }, [query]);
@@ -71,12 +71,14 @@ export function SearchProvider({ children }: { children: ReactNode }) {
                   className="flex items-center gap-4 rounded-2xl border border-transparent px-3 py-3 transition hover:border-border hover:bg-slate-50"
                 >
                   <div className="relative h-14 w-16 overflow-hidden rounded-xl bg-ice-blue">
-                    <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
+                    <Image src={product.images[0]} alt={product.name} fill className="object-contain p-1" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sapphire">
-                      {product.code}
-                    </p>
+                    {product.code ? (
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sapphire">
+                        {product.code}
+                      </p>
+                    ) : null}
                     <p className="truncate font-semibold text-deep-navy">{product.name}</p>
                     <p className="truncate text-sm text-muted">{product.category}</p>
                   </div>

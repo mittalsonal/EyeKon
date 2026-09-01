@@ -17,14 +17,17 @@ export function ProductCard({ product }: { product: Product }) {
           src={product.images[0]}
           alt={product.name}
           fill
-          className="object-cover transition duration-500 group-hover:scale-105"
+          className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 30vw"
         />
       </div>
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-center justify-between gap-3">
-          <span className="rounded-full bg-ice-blue px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-sapphire">
-            {product.code}
-          </span>
+          {product.code ? (
+            <span className="rounded-full bg-ice-blue px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-sapphire">
+              {product.code}
+            </span>
+          ) : null}
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
             {product.category}
           </span>

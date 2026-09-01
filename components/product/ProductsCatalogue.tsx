@@ -38,9 +38,9 @@ export function ProductsCatalogue({
       const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
       const matchesSearch =
         !normalizedSearch ||
-        [product.name, product.code, product.category].some((value) =>
-          value.toLowerCase().includes(normalizedSearch),
-        );
+        [product.name, product.category, product.shortDescription, product.code]
+          .filter((value): value is string => Boolean(value))
+          .some((value) => value.toLowerCase().includes(normalizedSearch));
 
       return matchesCategory && matchesSearch;
     });

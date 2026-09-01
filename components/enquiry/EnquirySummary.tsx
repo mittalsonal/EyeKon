@@ -22,7 +22,7 @@ export function EnquirySummary({
         {items.map((item) => (
           <div key={item.product.id} className="flex items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm">
             <span className="font-semibold text-deep-navy">
-              {item.product.code} {item.product.name}
+              {item.product.code ? `${item.product.code} - ` : ""}{item.product.name}
             </span>
             <span className="text-muted">Qty {item.quantity}</span>
           </div>
